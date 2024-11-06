@@ -11,7 +11,74 @@ let fisrtUserChoise = document.querySelector(".choise_mark-btn");
 const restartBtn = document.querySelector(".restart-btn");
 const turnImg = document.querySelector(".turn-img");
 
+const firstBtn = document.querySelector(".game-area-btn-1");
+const secondBtn = document.querySelector(".game-area-btn-2");
+const thirdBtn = document.querySelector(".game-area-btn-3");
+const fourBtn = document.querySelector(".game-area-btn-4");
+const fiveBtn = document.querySelector(".game-area-btn-5");
+const sixBtn = document.querySelector(".game-area-btn-6");
+const sevenBtn = document.querySelector(".game-area-btn-7");
+const eightBtn = document.querySelector(".game-area-btn-8");
+const nineBtn = document.querySelector(".game-area-btn-9");
+
 //
+
+function checkWin(playerClass) {
+  if (
+    // Horizontal wins
+    (firstBtn.classList.contains(playerClass) &&
+      secondBtn.classList.contains(playerClass) &&
+      thirdBtn.classList.contains(playerClass)) ||
+    (fourBtn.classList.contains(playerClass) &&
+      fiveBtn.classList.contains(playerClass) &&
+      sixBtn.classList.contains(playerClass)) ||
+    (sevenBtn.classList.contains(playerClass) &&
+      eightBtn.classList.contains(playerClass) &&
+      nineBtn.classList.contains(playerClass)) ||
+    // Vertical wins
+    (firstBtn.classList.contains(playerClass) &&
+      fourBtn.classList.contains(playerClass) &&
+      sevenBtn.classList.contains(playerClass)) ||
+    (secondBtn.classList.contains(playerClass) &&
+      fiveBtn.classList.contains(playerClass) &&
+      eightBtn.classList.contains(playerClass)) ||
+    (thirdBtn.classList.contains(playerClass) &&
+      sixBtn.classList.contains(playerClass) &&
+      nineBtn.classList.contains(playerClass)) ||
+    // Diagonal wins
+    (firstBtn.classList.contains(playerClass) &&
+      fiveBtn.classList.contains(playerClass) &&
+      nineBtn.classList.contains(playerClass)) ||
+    (thirdBtn.classList.contains(playerClass) &&
+      fiveBtn.classList.contains(playerClass) &&
+      sevenBtn.classList.contains(playerClass))
+  ) {
+    // alert(`${playerClass === "activeX" ? "X" : "Oval"} wins!`);
+
+    document.querySelector(".result_modal").style.display = "block";
+
+    if (playerClass === "activeX") {
+      document
+        .querySelector(".won-side")
+        .setAttribute("src", "./images/blue-x.svg");
+    } else {
+      document
+        .querySelector(".won-side")
+        .setAttribute("src", "./images/orange-oval.svg");
+    }
+  }
+}
+
+const gameButtons = document.querySelectorAll(".game-area-btn");
+function isEndGame() {
+  const isFull = Array.from(gameButtons).every((button) => {
+    return !button.classList.contains("empty");
+  });
+
+  if (isFull) {
+    document.querySelector(".tied_modal").style.display = "block";
+  }
+}
 
 xBtn &&
   xBtn.addEventListener("click", () => {
@@ -23,6 +90,7 @@ xBtn &&
     xBtnImg.setAttribute("src", "./images/active-x.svg");
     ovalBtnImg.setAttribute("src", "./images/turn-oval.svg");
   });
+
 ovalBtn &&
   ovalBtn.addEventListener("click", () => {
     userChoise = "o";
@@ -34,12 +102,22 @@ ovalBtn &&
     ovalBtnImg.setAttribute("src", "./images/choise-o.png");
   });
 
+document
+  .querySelector(".choise_section-player")
+  .addEventListener("click", () => {
+    if (userChoise != "") {
+      document.querySelector(".choise_section").style.display = "none";
+      document.querySelector("main").style.display = "block";
+    } else {
+      alert("X yoki O ni tanlash kerak!");
+      document.querySelector(".choise_mark-wrapper").focus();
+    }
+  });
+
 document.querySelector(".choise_section-cpu").addEventListener("click", () => {
   if (userChoise != "") {
     document.querySelector(".choise_section").style.display = "none";
     document.querySelector("main").style.display = "block";
-
-    //
   } else {
     alert("X yoki O ni tanlash kerak!");
     document.querySelector(".choise_mark-wrapper").focus();
@@ -47,14 +125,16 @@ document.querySelector(".choise_section-cpu").addEventListener("click", () => {
 });
 
 const gameBtn = document.querySelectorAll(".game-area-btn");
+let isXTurn = true;
 
-gameBtn.forEach(function (button) {
+gameBtn.forEach((button) => {
   button.addEventListener("click", function () {
+    button.classList.remove("empty");
     if (
       !button.classList.contains("activeOval") &&
       !button.classList.contains("activeX")
     ) {
-      if (turnImg.getAttribute("src") === "./images/nav-x.svg") {
+      if (isXTurn) {
         button.innerHTML = `<img src="./images/x.svg" alt="x">`;
         button.classList.add("activeX");
         turnImg.setAttribute("src", "./images/turn-oval.svg");
@@ -63,6 +143,8 @@ gameBtn.forEach(function (button) {
         button.classList.add("activeOval");
         turnImg.setAttribute("src", "./images/nav-x.svg");
       }
+      isXTurn = !isXTurn;
+      isEndGame();
     }
   });
 });
@@ -85,3 +167,11 @@ restartBtn &&
   });
 
 console.log(userChoise);
+// isXWon();
+
+gameBtn.forEach((button) => {
+  button.addEventListener("click", function () {
+    checkWin("activeX");
+    checkWin("activeOval");
+  });
+});

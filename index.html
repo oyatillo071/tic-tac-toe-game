@@ -68,15 +68,15 @@
         <!--  -->
 
         <section class="game-area">
-          <button class="game-area-btn game-area-btn-1"></button>
-          <button class="game-area-btn game-area-btn-2"></button>
-          <button class="game-area-btn game-area-btn-3"></button>
-          <button class="game-area-btn game-area-btn-4"></button>
-          <button class="game-area-btn game-area-btn-5"></button>
-          <button class="game-area-btn game-area-btn-6"></button>
-          <button class="game-area-btn game-area-btn-7"></button>
-          <button class="game-area-btn game-area-btn-8"></button>
-          <button class="game-area-btn game-area-btn-9"></button>
+          <button class="game-area-btn empty game-area-btn-1"></button>
+          <button class="game-area-btn empty game-area-btn-2"></button>
+          <button class="game-area-btn empty game-area-btn-3"></button>
+          <button class="game-area-btn empty game-area-btn-4"></button>
+          <button class="game-area-btn empty game-area-btn-5"></button>
+          <button class="game-area-btn empty game-area-btn-6"></button>
+          <button class="game-area-btn empty game-area-btn-7"></button>
+          <button class="game-area-btn empty game-area-btn-8"></button>
+          <button class="game-area-btn empty game-area-btn-9"></button>
         </section>
 
         <!--  -->
@@ -99,16 +99,19 @@
       <div class="result_modal-info">
         <p class="result_modal-res-text">OH NO, YOU LOST…</p>
         <h2 class="result_modal-title">
-          <img
-            class="won-side"
-            src="./images/orange-oval.svg"
-            alt="won variant" />
+          <img class="won-side" src="./images/blue-x.svg" ; alt="won variant" />
           TAKES THE ROUND
         </h2>
         <!--  -->
         <div class="result_modal-btns">
-          <button class="result_modal-quit">QUIT</button>
-          <button class="result_modal-next">NEXT ROUND</button>
+          <button
+            class="result_modal-quit"
+            onclick="window.open('', '_self', ''); window.close();">
+            QUIT
+          </button>
+          <button class="result_modal-next" onclick="location.reload()">
+            NEXT ROUND
+          </button>
         </div>
         <!--  -->
       </div>
@@ -135,8 +138,14 @@
       <div class="tied_modal-info">
         <h3 class="tied_modal-title">ROUND TIED</h3>
         <div class="result_modal-btns">
-          <button class="result_modal-quit">QUIT</button>
-          <button class="result_modal-next">NEXT ROUND</button>
+          <button
+            class="result_modal-quit"
+            onclick="window.open('', '_self', ''); window.close();">
+            QUIT
+          </button>
+          <button class="result_modal-next" onclick="location.reload()">
+            NEXT ROUND
+          </button>
         </div>
       </div>
     </div>
