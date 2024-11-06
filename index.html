@@ -14,13 +14,14 @@
     <div class="container">
       <!--  -->
 
-      <div class="choise_section">
+      <!-- choise modal -->
+      <div class="choise_section" style="display: none">
         <!--  -->
 
         <img class="choise_section-img" src="./images/favicon2.svg" alt="X O" />
         <!--  -->
 
-        <div class="choise_mark" style="display: flex">
+        <div class="choise_mark">
           <h4 class="choise_mark-text">PICK PLAYER 1'S MARK</h4>
           <div class="choise_mark-wrapper">
             <button class="choise_mark-btn choise_mark--btn-x">
@@ -38,6 +39,50 @@
         <button class="choise_section-cpu">NEW GAME (VS CPU)</button>
         <button class="choise_section-player">NEW GAME (VS PLAYER)</button>
       </div>
+
+      <!--  -->
+
+      <!--  main -->
+
+      <main>
+        <!--  -->
+
+        <div class="game_nav">
+          <img class="game_nav-img" src="./images/favicon2.svg" alt="X O" />
+          <button class="game_nav-turn-btn">
+            <img class="turn-img" src="./images/nav-x.svg" alt="x" /> TURN
+          </button>
+          <button class="restart-btn">
+            <img src="./images/restart-btn.svg" alt="restart game button" />
+          </button>
+        </div>
+
+        <!--  -->
+
+        <!--  -->
+
+        <section class="game-area">
+          <button class="game-area-btn game-area-btn-1"></button>
+          <button class="game-area-btn game-area-btn-2"></button>
+          <button class="game-area-btn game-area-btn-3"></button>
+          <button class="game-area-btn game-area-btn-4"></button>
+          <button class="game-area-btn game-area-btn-5"></button>
+          <button class="game-area-btn game-area-btn-6"></button>
+          <button class="game-area-btn game-area-btn-7"></button>
+          <button class="game-area-btn game-area-btn-8"></button>
+          <button class="game-area-btn game-area-btn-9"></button>
+        </section>
+
+        <!--  -->
+        <!--  -->
+        <section class="game_score">
+          <h4 class="game_score-info game_score-info-first">
+          </h4>
+          <h4 class="game_score-info game_score-info-second"></h4>
+          <h4 class="game_score-info game_score-info-third">
+          </h4>
+        </section>
+      </main>
 
       <!--  -->
     </div>

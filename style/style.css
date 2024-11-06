@@ -25,18 +25,8 @@ body {
 
 button {
   cursor: pointer;
-}
-
-.restart-btn {
-  width: 52px;
-  aspect-ratio: 1;
-  border-radius: 10px;
-  background: #a8bfc9;
-  box-shadow: 0px -4px 0px 0px #6b8997 inset;
-  color: #1f3641;
-}
-.restart-btn:hover {
-  background-color: #dbe8ed;
+  transition: all 0.3s linear;
+  border: none;
 }
 
 .choise_section {
@@ -53,6 +43,7 @@ button {
 
 .choise_mark {
   width: 460px;
+  display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
@@ -64,7 +55,7 @@ button {
 }
 @media screen and (max-width: 480px) {
   .choise_mark {
-    max-width: 360px;
+    max-width: 300px;
   }
 }
 
@@ -113,6 +104,7 @@ button {
 .choise_section-cpu {
   max-width: 460px;
   border-radius: 15px;
+  border: none;
   background-color: #f2b137;
   box-shadow: 0px -8px 0px 0px #cc8b13 inset;
   font-size: 20px;
@@ -135,10 +127,19 @@ button {
     padding: 20px 40px;
   }
 }
+@media screen and (max-width: 400px) {
+  .choise_section-cpu {
+    max-width: 310px;
+    width: 100%;
+    padding: 20px 10px;
+    font-size: 16px;
+  }
+}
 
 .choise_section-player {
   max-width: 460px;
   border-radius: 15px;
+  border: none;
   background-color: #31c3bd;
   box-shadow: 0px -8px 0px 0px #118c87 inset;
   font-size: 20px;
@@ -159,4 +160,165 @@ button {
     width: 100%;
     padding: 20px 40px;
   }
+}
+@media screen and (max-width: 400px) {
+  .choise_section-player {
+    max-width: 310px;
+    width: 100%;
+    padding: 20px 10px;
+    font-size: 16px;
+  }
+}
+
+.game_nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  max-width: 457px;
+  width: 100%;
+  padding-inline: 10px;
+}
+@media screen and (max-width: 576px) {
+  .game_nav {
+    margin-bottom: 64px;
+  }
+}
+
+.game_nav-turn-btn {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background-color: #1f3641;
+  padding: 18px 30px;
+  box-shadow: 0px -4px 0px 0px #10212a inset;
+  color: #a8bfc9;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20.16px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+@media screen and (max-width: 370px) {
+  .game_nav-turn-btn {
+    max-width: 96px;
+    font-size: 14px;
+    padding: 10px 18px;
+    gap: 5px;
+  }
+  .game_nav-turn-btn .turn-img {
+    width: 16px;
+  }
+}
+
+.restart-btn {
+  width: 52px;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: #a8bfc9;
+  box-shadow: 0px -4px 0px 0px #6b8997 inset;
+  color: #1f3641;
+}
+.restart-btn:hover {
+  background-color: #dbe8ed;
+}
+@media screen and (max-width: 370px) {
+  .restart-btn {
+    max-width: 40px;
+  }
+}
+
+.game-area {
+  max-width: 457px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 20px;
+  padding-inline: 10px;
+}
+
+.game-area-btn {
+  max-width: 140px;
+  aspect-ratio: 1;
+  border-radius: 15px;
+  background-color: #1f3641;
+  box-shadow: 0px -8px 0px 0px #10212a inset;
+}
+
+.game-area-btn-4 {
+  grid-row-start: 2;
+}
+
+.game-area-btn-5 {
+  grid-row-start: 2;
+}
+
+.game-area-btn-6 {
+  grid-row-start: 2;
+}
+
+.game-area-btn-7 {
+  grid-row-start: 3;
+}
+
+.game-area-btn-8 {
+  grid-row-start: 3;
+}
+
+.game-area-btn-9 {
+  grid-row-start: 3;
+}
+
+.game_score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-block: 40px;
+}
+
+.game_score-info-first {
+  max-width: 140px;
+  width: 100%;
+  height: 72px;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #31c3bd;
+  color: #1a2a33;
+  display: flex;
+  line-height: 1.2;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game_score-info-second {
+  max-width: 140px;
+  width: 100%;
+  height: 72px;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #a8bfc9;
+  color: #1a2a33;
+  display: flex;
+  line-height: 1.2;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game_score-info-third {
+  max-width: 140px;
+  width: 100%;
+  height: 72px;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #f2b137;
+  color: #1a2a33;
+  display: flex;
+  line-height: 1.2;
+  flex-direction: column;
+  align-items: center;
 }/*# sourceMappingURL=style.css.map */
