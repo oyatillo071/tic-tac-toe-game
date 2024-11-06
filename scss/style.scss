@@ -95,7 +95,7 @@ body {
 }
 button {
   cursor: pointer;
-  transition: all 0.3s linear;
+  transition: all 0.2s linear;
   border: none;
 }
 //
@@ -143,17 +143,31 @@ button {
   padding-inline: auto;
   padding: 10px;
   border-radius: 10px;
+
 }
 .choise_mark-btn {
   max-width: 50%;
   width: 100%;
-  background-color: #a8bfc90d;
   border-radius: 8px;
   padding: 10px;
   border: none;
+  background-color: transparent;
+  img {
+    width: 32px;
+    aspect-ratio: 1;
+  }
 }
-.choise_mark-btn-o {
+
+#isActive-choise {
   background-color: $silver;
+}
+
+.choise_mark-btn-x {
+  background-color: transparent;
+
+  &:hover {
+    background-color: #a8bfc90d;
+  }
 }
 .choise_mark-bottom-text {
   font-size: 14px;

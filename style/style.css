@@ -25,7 +25,7 @@ body {
 
 button {
   cursor: pointer;
-  transition: all 0.3s linear;
+  transition: all 0.2s linear;
   border: none;
 }
 
@@ -81,14 +81,25 @@ button {
 .choise_mark-btn {
   max-width: 50%;
   width: 100%;
-  background-color: rgba(168, 191, 201, 0.0509803922);
   border-radius: 8px;
   padding: 10px;
   border: none;
+  background-color: transparent;
+}
+.choise_mark-btn img {
+  width: 32px;
+  aspect-ratio: 1;
 }
 
-.choise_mark-btn-o {
+#isActive-choise {
   background-color: #a8bfc9;
+}
+
+.choise_mark-btn-x {
+  background-color: transparent;
+}
+.choise_mark-btn-x:hover {
+  background-color: rgba(168, 191, 201, 0.0509803922);
 }
 
 .choise_mark-bottom-text {
