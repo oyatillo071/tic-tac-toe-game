@@ -1,0 +1,35 @@
+@import "./font.css";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+}
+
+.container {
+  max-width: 460px;
+  width: 100%;
+  padding-inline: 15px;
+  margin: 139px auto;
+}
+@media screen and (max-width: 576px) {
+  .container {
+    max-width: 375px;
+    margin: 24px 24px 127px;
+  }
+}
+
+.restart-btn {
+  width: 52px;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: #a8bfc9;
+  box-shadow: 0px -4px 0px 0px #6b8997 inset;
+  color: #1f3641;
+}
+.restart-btn:hover {
+  background-color: #dbe8ed;
+}/*# sourceMappingURL=style.css.map */

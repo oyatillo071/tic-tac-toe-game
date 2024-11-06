@@ -1,0 +1,78 @@
+// imports
+@import "./font.css";
+@import "./variable";
+@import "./mixins";
+
+//
+// mixin
+@mixin button(
+  $bg-color: $light-yellow,
+  $shadow-color: #cc8b13,
+  $hover: $light-yellow-hover
+) {
+  border-radius: 15px;
+  background-color: $bg-color;
+  box-shadow: 0px -8px 0px 0px $shodow-color inset;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 25.2px;
+  letter-spacing: 1.25px;
+  text-align: center;
+  padding: 17px 152px 25px 154px;
+  color: $dark-navy;
+  &:hover {
+    background-color: $hover;
+  }
+}
+
+@mixin med-btn($bg-color, $shadow, $hover) {
+  box-shadow: 0px -4px 0px 0px $shadow inset;
+  background-color: $bg-color;
+  color: $dark-navy;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20.16px;
+  letter-spacing: 1px;
+  text-align: left;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: $hover;
+  }
+}
+
+//
+// styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: $main-font-family, sans-serif;
+}
+.container {
+  max-width: 460px;
+  width: 100%;
+  padding-inline: 15px;
+  margin: 139px auto;
+  @media screen and (max-width: 576px) {
+    max-width: 375px;
+    margin: 24px 24px 127px;
+  }
+}
+//
+
+.restart-btn {
+  width: 52px;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: $silver;
+  box-shadow: 0px -4px 0px 0px #6b8997 inset;
+  color: $semi-dark-navy;
+  &:hover {
+    background-color: $silver-hover;
+  }
+}
