@@ -3,11 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/style.css" />
     <title>Tic-Tac-Toe</title>
-    <link rel="shortcut icon" href="./images/favicon2.svg" type="image/x-icon">
-</head>
+    <link
+      rel="shortcut icon"
+      href="./images/favicon2.svg"
+      type="image/x-icon" />
+  </head>
   <body>
+    <div class="container">
+      <!--  -->
+
+      <div class="choise_section">
+        <!--  -->
+
+        <img class="choise_section-img" src="./images/favicon2.svg" alt="X O" />
+        <!--  -->
+
+        <div class="choise_mark" style="display: flex">
+          <h4 class="choise_mark-text">PICK PLAYER 1'S MARK</h4>
+          <div class="choise_mark-wrapper">
+            <button class="choise_mark-btn choise_mark--btn-x">
+              <img src="./images/choise-x.png" alt="X" />
+            </button>
+            <button class="choise_mark-btn choise_mark-btn-o">
+              <img src="./images/choise-o.png" alt="O" />
+            </button>
+          </div>
+          <!--  -->
+
+          <h4 class="choise_mark-bottom-text">REMEMBER : X GOES FIRST</h4>
+        </div>
+
+        <button class="choise_section-cpu">NEW GAME (VS CPU)</button>
+        <button class="choise_section-player">NEW GAME (VS PLAYER)</button>
+      </div>
+
+      <!--  -->
+    </div>
 
     <script src="./js/index.js"></script>
   </body>
