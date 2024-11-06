@@ -58,7 +58,7 @@
 }
 
 @mixin score-info($bgc) {
-  max-width: 140px;
+  max-width: 30%;
   width: 100%;
   height: 72px;
   border: none;
@@ -202,6 +202,7 @@ button {
   line-height: 20.16px;
   letter-spacing: 1px;
   text-align: center;
+  cursor: default;
 
   @media screen and (max-width: 370px) {
     max-width: 96px;
@@ -279,6 +280,7 @@ button {
 .game_score {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   margin-block: 40px;
 }
@@ -290,4 +292,135 @@ button {
 }
 .game_score-info-third {
   @include score-info($light-yellow);
+}
+
+.result_modal,
+.restart_modal,
+.tied_modal {
+  position: fixed;
+  width: 100%;
+  top: 40%;
+  bottom: 40%;
+  height: 270px;
+  padding: 40px 10px;
+  background-color: $semi-dark-navy;
+
+  @media screen and (max-width: 700px) {
+    top: 20%;
+  }
+}
+
+.result_modal-info,
+.restart_modal-info,
+.tied_modal-info {
+  margin: 10px auto;
+  max-width: 491px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.result_modal-res-text {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.26;
+  letter-spacing: 1px;
+  text-align: center;
+  color: $silver;
+}
+
+.result_modal-title,
+.restart_modal-title,
+.tied_modal-title {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 2.5px;
+  text-align: left;
+  color: $light-yellow;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  @media screen and (max-width: 400px) {
+    font-size: 20px;
+  }
+}
+.tied_modal-title {
+  color: $silver;
+  font-size: 40px;
+}
+.restart_modal-title {
+  color: $silver;
+  font-size: 40px;
+}
+.won-side {
+  width: 64px;
+  aspect-ratio: 1;
+  @media screen and (max-width: 576px) {
+    width: 30px;
+  }
+}
+
+.result_modal-btns,
+.restart_modal-btns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.restart_modal-btns {
+  button {
+    border: none;
+    border-radius: 10px;
+    color: $dark-navy;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.26;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 15px 16px;
+  }
+}
+.restart_modal-cancel {
+  background-color: $silver;
+  &:hover {
+    background-color: $silver-hover;
+  }
+}
+.restart_modal-confirm {
+  box-shadow: 0px -4px 0px 0px #cc8b13 inset;
+  background-color: $light-yellow;
+
+  &:hover {
+    background-color: $light-yellow-hover;
+  }
+}
+
+.result_modal-quit,
+.result_modal-next {
+  padding: 12px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.26;
+  letter-spacing: 1px;
+  text-align: center;
+  color: $dark-navy;
+  background-color: $silver;
+  box-shadow: 0px -4px 0px 0px #6b8997 inset;
+  border: none;
+  &:hover {
+    background-color: $silver-hover;
+  }
+}
+.result_modal-next {
+  color: $dark-navy;
+  background-color: $light-yellow;
+  box-shadow: 0px -4px 0px 0px #cc8b13 inset;
+
+  &:hover {
+    background-color: $light-yellow-hover;
+  }
 }
