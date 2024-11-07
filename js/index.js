@@ -40,13 +40,18 @@ function cpuRandomTurn(isXTurn) {
     btns[randIndex].innerHTML = `<img src="./images/x.svg" alt="x">`;
     btns[randIndex].classList.add("activeX");
     turnImg.setAttribute("src", "./images/turn-oval.svg");
+    isXTurn = false;
   } else {
     btns[
       randIndex
     ].innerHTML = `<img src="./images/orange-oval.svg" alt="oval">`;
     btns[randIndex].classList.add("activeOval");
     turnImg.setAttribute("src", "./images/nav-x.svg");
+    isXTurn = true;
   }
+
+  checkWin(botChoise === "x" ? "activeX" : "activeOval");
+  isEndGame();
 }
 
 function checkWin(playerClass) {
@@ -141,7 +146,7 @@ document.querySelector(".choise_section-cpu").addEventListener("click", () => {
     withCpu = true;
     if (userChoise == "o") {
       cpuRandomTurn(true);
-      isXTurn = !isXTurn;
+      isXTurn = false;
     }
   } else {
     alert("X yoki O ni tanlash kerak!");
@@ -178,10 +183,12 @@ gameButtons.forEach((button) => {
           button.classList.add("activeOval");
           turnImg.setAttribute("src", "./images/nav-x.svg");
         }
-        isXTurn = !isXTurn;
-
-        cpuRandomTurn(isXTurn);
-      } else {
+        if (userChoise == "o") {
+          cpuRandomTurn(true);
+        } else {
+          cpuRandomTurn(false);
+        }
+      } else if (!withCpu) {
         if (isXTurn) {
           button.innerHTML = `<img src="./images/x.svg" alt="x">`;
           button.classList.add("activeX");
