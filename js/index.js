@@ -12,16 +12,15 @@ const ovalBtnImg = document.querySelector(".choise_mark-btn-o-img");
 let fisrtUserChoise = document.querySelector(".choise_mark-btn");
 const restartBtn = document.querySelector(".restart-btn");
 const turnImg = document.querySelector(".turn-img");
+const winCountElement = document.querySelector(".game_score-info-win");
+const tieCountElement = document.querySelector(".game_score-info-tied");
+const cpuCountElement = document.querySelector(".game_score-info-cpu");
 
-const firstBtn = document.querySelector(".game-area-btn-1");
-const secondBtn = document.querySelector(".game-area-btn-2");
-const thirdBtn = document.querySelector(".game-area-btn-3");
-const fourBtn = document.querySelector(".game-area-btn-4");
-const fiveBtn = document.querySelector(".game-area-btn-5");
-const sixBtn = document.querySelector(".game-area-btn-6");
-const sevenBtn = document.querySelector(".game-area-btn-7");
-const eightBtn = document.querySelector(".game-area-btn-8");
-const nineBtn = document.querySelector(".game-area-btn-9");
+//
+let winCount = parseInt(localStorage.getItem("winCount")) || 0;
+let tieCount = parseInt(localStorage.getItem("tieCount")) || 0;
+let cpuCount = parseInt(localStorage.getItem("cpuCount")) || 0;
+//
 
 const gameButtons = document.querySelectorAll(".game-area-btn");
 
@@ -30,6 +29,45 @@ function updateFreeButtons() {
   return document.querySelectorAll(".empty");
 }
 
+//
+
+function updateScoreDisplay() {
+  winCountElement.innerHTML = `X <br> <h3> ${winCount} </h3>`;
+  tieCountElement.innerHTML = `TIES <br> <h3> ${tieCount} </h3>`;
+  cpuCountElement.innerHTML = `O <br> <h3> ${cpuCount} </h3>`;
+}
+
+//
+function increaseWinCount() {
+  winCount++;
+  localStorage.setItem("winCount", winCount);
+  updateScoreDisplay();
+}
+
+//
+
+function increaseTieCount() {
+  tieCount++;
+  localStorage.setItem("tieCount", tieCount);
+  updateScoreDisplay();
+}
+
+//
+
+function increaseCpuCount() {
+  cpuCount++;
+  localStorage.setItem("cpuCount", cpuCount);
+  updateScoreDisplay();
+}
+
+//
+updateScoreDisplay();
+
+//
+
+//
+
+//
 function cpuRandomTurn(isXTurn) {
   let btns = updateFreeButtons();
   let randIndex = Math.trunc(Math.random() * btns.length);
@@ -50,54 +88,47 @@ function cpuRandomTurn(isXTurn) {
     isXTurn = true;
   }
 
-  checkWin(botChoise === "x" ? "activeX" : "activeOval");
+  checkWin(botChoise == "x" ? "activeX" : "activeOval");
   isEndGame();
 }
 
+const gameButtonsArr = Array.from(document.querySelectorAll(".game-area-btn"));
+
+const winPatterns = [
+  [0, 1, 2], // Gorizontal
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6], // Vertikal
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8], // Diagonal
+  [2, 4, 6],
+];
+
 function checkWin(playerClass) {
-  if (
-    // Horizontal wins
-    (firstBtn.classList.contains(playerClass) &&
-      secondBtn.classList.contains(playerClass) &&
-      thirdBtn.classList.contains(playerClass)) ||
-    (fourBtn.classList.contains(playerClass) &&
-      fiveBtn.classList.contains(playerClass) &&
-      sixBtn.classList.contains(playerClass)) ||
-    (sevenBtn.classList.contains(playerClass) &&
-      eightBtn.classList.contains(playerClass) &&
-      nineBtn.classList.contains(playerClass)) ||
-    // Vertical wins
-    (firstBtn.classList.contains(playerClass) &&
-      fourBtn.classList.contains(playerClass) &&
-      sevenBtn.classList.contains(playerClass)) ||
-    (secondBtn.classList.contains(playerClass) &&
-      fiveBtn.classList.contains(playerClass) &&
-      eightBtn.classList.contains(playerClass)) ||
-    (thirdBtn.classList.contains(playerClass) &&
-      sixBtn.classList.contains(playerClass) &&
-      nineBtn.classList.contains(playerClass)) ||
-    // Diagonal wins
-    (firstBtn.classList.contains(playerClass) &&
-      fiveBtn.classList.contains(playerClass) &&
-      nineBtn.classList.contains(playerClass)) ||
-    (thirdBtn.classList.contains(playerClass) &&
-      fiveBtn.classList.contains(playerClass) &&
-      sevenBtn.classList.contains(playerClass))
-  ) {
-    // alert(`${playerClass === "activeX" ? "X" : "Oval"} wins!`);
+  const hasWon = winPatterns.some((pattern) =>
+    pattern.every((index) =>
+      gameButtonsArr[index].classList.contains(playerClass)
+    )
+  );
 
+  if (hasWon) {
     document.querySelector(".result_modal").style.display = "block";
-
-    if (playerClass === "activeX") {
-      document
-        .querySelector(".won-side")
-        .setAttribute("src", "./images/blue-x.svg");
+    let res = "";
+    if (playerClass == "activeX") {
+      if (playerClass == "activeX") {
+        increaseWinCount();
+      } else if (playerClass != "activeX") {
+        increaseCpuCount();
+      }
+      res = "./images/blue-x.svg";
     } else {
-      document
-        .querySelector(".won-side")
-        .setAttribute("src", "./images/orange-oval.svg");
+      res = "./images/orange-oval.svg";
     }
+
+    document.querySelector(".won-side").setAttribute("src", res);
   }
+  updateScoreDisplay();
 }
 
 function isEndGame() {
@@ -105,8 +136,9 @@ function isEndGame() {
     return !button.classList.contains("empty");
   });
 
-  if (isFull) {
+  if ((isFull && checkWin("activeX")) || checkWin("activeOval")) {
     document.querySelector(".tied_modal").style.display = "block";
+    increaseTieCount();
   }
 }
 
@@ -130,6 +162,7 @@ ovalBtn &&
     xBtn.setAttribute("id", " ");
     xBtnImg.setAttribute("src", "./images/choise-x.png");
     ovalBtnImg.setAttribute("src", "./images/choise-o.png");
+    updateScoreDisplay();
   });
 
 document
@@ -137,6 +170,7 @@ document
   .addEventListener("click", () => {
     document.querySelector(".choise_section").style.display = "none";
     document.querySelector("main").style.display = "block";
+    updateScoreDisplay();
   });
 
 document.querySelector(".choise_section-cpu").addEventListener("click", () => {
@@ -174,6 +208,7 @@ gameButtons.forEach((button) => {
       button.classList.remove("empty");
 
       if (withCpu) {
+        updateScoreDisplay();
         if (isXTurn) {
           button.innerHTML = `<img src="./images/x.svg" alt="x">`;
           button.classList.add("activeX");
@@ -200,7 +235,7 @@ gameButtons.forEach((button) => {
         }
         isXTurn = !isXTurn;
       }
-
+      updateScoreDisplay();
       isEndGame();
     }
   });
@@ -234,6 +269,9 @@ restartBtn &&
       .querySelector(".restart_modal-confirm")
       .addEventListener("click", () => {
         location.reload();
+        localStorage.setItem("winCount", 0);
+        localStorage.setItem("tieCount", 0);
+        localStorage.setItem("cpuCount", 0);
       });
   });
 
@@ -246,3 +284,5 @@ gameButtons.forEach((button) => {
     checkWin("activeOval");
   });
 });
+
+document.addEventListener("DOMContentLoaded", updateScoreDisplay);

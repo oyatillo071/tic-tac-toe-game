@@ -291,7 +291,23 @@ button {
   margin-block: 40px;
 }
 
-.game_score-info-first {
+.game_score-info {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.875px;
+  text-align: center;
+}
+.game_score-info h3 {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 30.24px;
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+.game_score-info-win {
   max-width: 30%;
   width: 100%;
   height: 72px;
@@ -306,7 +322,7 @@ button {
   align-items: center;
 }
 
-.game_score-info-second {
+.game_score-info-tied {
   max-width: 30%;
   width: 100%;
   height: 72px;
@@ -321,7 +337,7 @@ button {
   align-items: center;
 }
 
-.game_score-info-third {
+.game_score-info-cpu {
   max-width: 30%;
   width: 100%;
   height: 72px;
