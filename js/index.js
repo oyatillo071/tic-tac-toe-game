@@ -1,5 +1,7 @@
 let userChoise = "";
 let botChoise = "";
+let withCpu = false;
+let isXTurn = true;
 
 //
 
@@ -21,7 +23,36 @@ const sevenBtn = document.querySelector(".game-area-btn-7");
 const eightBtn = document.querySelector(".game-area-btn-8");
 const nineBtn = document.querySelector(".game-area-btn-9");
 
+const gameButtons = document.querySelectorAll(".game-area-btn");
+
 //
+function updateFreeButtons() {
+  return document.querySelectorAll(".empty");
+}
+
+function cpuRandomTurn(isXTurn) {
+  let btns = updateFreeButtons();
+  let randIndex = Math.trunc(Math.random() * btns.length);
+
+  btns[randIndex].classList.remove("empty");
+
+  if (isXTurn) {
+    btns[randIndex].innerHTML = `<img src="./images/x.svg" alt="x">`;
+    btns[randIndex].classList.add("activeX");
+    turnImg.setAttribute("src", "./images/turn-oval.svg");
+    isXTurn = false;
+  } else {
+    btns[
+      randIndex
+    ].innerHTML = `<img src="./images/orange-oval.svg" alt="oval">`;
+    btns[randIndex].classList.add("activeOval");
+    turnImg.setAttribute("src", "./images/nav-x.svg");
+    isXTurn = true;
+  }
+
+  checkWin(botChoise === "x" ? "activeX" : "activeOval");
+  isEndGame();
+}
 
 function checkWin(playerClass) {
   if (
@@ -69,7 +100,6 @@ function checkWin(playerClass) {
   }
 }
 
-const gameButtons = document.querySelectorAll(".game-area-btn");
 function isEndGame() {
   const isFull = Array.from(gameButtons).every((button) => {
     return !button.classList.contains("empty");
@@ -105,49 +135,90 @@ ovalBtn &&
 document
   .querySelector(".choise_section-player")
   .addEventListener("click", () => {
-    if (userChoise != "") {
-      document.querySelector(".choise_section").style.display = "none";
-      document.querySelector("main").style.display = "block";
-    } else {
-      alert("X yoki O ni tanlash kerak!");
-      document.querySelector(".choise_mark-wrapper").focus();
-    }
+    document.querySelector(".choise_section").style.display = "none";
+    document.querySelector("main").style.display = "block";
   });
 
 document.querySelector(".choise_section-cpu").addEventListener("click", () => {
   if (userChoise != "") {
     document.querySelector(".choise_section").style.display = "none";
     document.querySelector("main").style.display = "block";
+    withCpu = true;
+    if (userChoise == "o") {
+      cpuRandomTurn(true);
+      isXTurn = false;
+    }
   } else {
     alert("X yoki O ni tanlash kerak!");
     document.querySelector(".choise_mark-wrapper").focus();
   }
 });
 
-const gameBtn = document.querySelectorAll(".game-area-btn");
-let isXTurn = true;
+//
 
-gameBtn.forEach((button) => {
+//
+
+//
+
+//
+gameButtons.forEach((button) => {
   button.addEventListener("click", function () {
-    button.classList.remove("empty");
+    //
+
+    //
+
     if (
       !button.classList.contains("activeOval") &&
       !button.classList.contains("activeX")
     ) {
-      if (isXTurn) {
-        button.innerHTML = `<img src="./images/x.svg" alt="x">`;
-        button.classList.add("activeX");
-        turnImg.setAttribute("src", "./images/turn-oval.svg");
-      } else {
-        button.innerHTML = `<img src="./images/orange-oval.svg" alt="oval">`;
-        button.classList.add("activeOval");
-        turnImg.setAttribute("src", "./images/nav-x.svg");
+      button.classList.remove("empty");
+
+      if (withCpu) {
+        if (isXTurn) {
+          button.innerHTML = `<img src="./images/x.svg" alt="x">`;
+          button.classList.add("activeX");
+          turnImg.setAttribute("src", "./images/turn-oval.svg");
+        } else {
+          button.innerHTML = `<img src="./images/orange-oval.svg" alt="oval">`;
+          button.classList.add("activeOval");
+          turnImg.setAttribute("src", "./images/nav-x.svg");
+        }
+        if (userChoise == "o") {
+          cpuRandomTurn(true);
+        } else {
+          cpuRandomTurn(false);
+        }
+      } else if (!withCpu) {
+        if (isXTurn) {
+          button.innerHTML = `<img src="./images/x.svg" alt="x">`;
+          button.classList.add("activeX");
+          turnImg.setAttribute("src", "./images/turn-oval.svg");
+        } else {
+          button.innerHTML = `<img src="./images/orange-oval.svg" alt="oval">`;
+          button.classList.add("activeOval");
+          turnImg.setAttribute("src", "./images/nav-x.svg");
+        }
+        isXTurn = !isXTurn;
       }
-      isXTurn = !isXTurn;
+
       isEndGame();
     }
   });
 });
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
 
 const restartModal = document.querySelector(".restart_modal");
 restartBtn &&
@@ -169,7 +240,7 @@ restartBtn &&
 console.log(userChoise);
 // isXWon();
 
-gameBtn.forEach((button) => {
+gameButtons.forEach((button) => {
   button.addEventListener("click", function () {
     checkWin("activeX");
     checkWin("activeOval");
