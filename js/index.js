@@ -47,9 +47,12 @@ function increaseWinCount() {
 //
 
 function increaseTieCount() {
+  console.log(tieCount);
   tieCount++;
+
   localStorage.setItem("tieCount", tieCount);
   updateScoreDisplay();
+  console.log(tieCount);
 }
 
 //
@@ -64,7 +67,33 @@ function increaseCpuCount() {
 updateScoreDisplay();
 
 //
+function hoverUpdateBtns() {
+  return Array.from(document.querySelectorAll(".empty"));
+}
 
+function hoverEffect(isXTurn) {
+  let gameFreeButtonsHover = hoverUpdateBtns();
+
+  gameFreeButtonsHover.forEach((element) => {
+    if (isXTurn) {
+      element.classList.remove("isHoverX");
+      element.classList.add("isHoverOval");
+    } else {
+      element.classList.remove("isHoverOval");
+      element.classList.add("isHoverX");
+    }
+  });
+
+  gameButtons.forEach((element) => {
+    if (
+      element.classList.contains("activeOval") ||
+      element.classList.contains("activeX")
+    ) {
+      element.classList.remove("isHoverX");
+      element.classList.remove("isHoverOval");
+    }
+  });
+}
 //
 
 //
@@ -73,12 +102,14 @@ function cpuRandomTurn(isXTurn) {
   let randIndex = Math.trunc(Math.random() * btns.length);
 
   btns[randIndex].classList.remove("empty");
-
   if (isXTurn) {
-    btns[randIndex].innerHTML = `<img src="./images/x.svg" alt="x">`;
+    btns[
+      randIndex
+    ].innerHTML = `<img src="./images/xOnClick.svg" width="64" height="64" alt="x">`;
     btns[randIndex].classList.add("activeX");
     turnImg.setAttribute("src", "./images/turn-oval.svg");
     isXTurn = false;
+    hoverEffect(!isXTurn);
   } else {
     btns[
       randIndex
@@ -86,6 +117,7 @@ function cpuRandomTurn(isXTurn) {
     btns[randIndex].classList.add("activeOval");
     turnImg.setAttribute("src", "./images/nav-x.svg");
     isXTurn = true;
+    hoverEffect(!isXTurn);
   }
 
   checkWin(botChoise == "x" ? "activeX" : "activeOval");
@@ -105,6 +137,23 @@ const winPatterns = [
   [2, 4, 6],
 ];
 
+function whoWinGame(winSide) {
+  let winnerClass = winSide == "x" ? "activeX" : "activeOval";
+
+  winPatterns.forEach((pattern) => {
+    if (
+      pattern.every((index) =>
+        gameButtonsArr[index].classList.contains(winnerClass)
+      )
+    ) {
+      // Add the winning class to each button in the winning pattern
+      pattern.forEach((index) => {
+        gameButtonsArr[index].classList.add("winClassForLine");
+      });
+    }
+  });
+}
+
 function checkWin(playerClass) {
   const hasWon = winPatterns.some((pattern) =>
     pattern.every((index) =>
@@ -115,30 +164,37 @@ function checkWin(playerClass) {
   if (hasWon) {
     document.querySelector(".result_modal").style.display = "block";
     let res = "";
+    let line = "";
     if (playerClass == "activeX") {
-      if (playerClass == "activeX") {
-        increaseWinCount();
-      } else if (playerClass != "activeX") {
-        increaseCpuCount();
-      }
+      increaseWinCount();
       res = "./images/blue-x.svg";
-    } else {
+      line = "x";
+    } else if (playerClass == "activeOval") {
+      increaseCpuCount();
+      line = "o";
       res = "./images/orange-oval.svg";
     }
 
+    whoWinGame(line);
     document.querySelector(".won-side").setAttribute("src", res);
+    return true;
   }
-  updateScoreDisplay();
+  return false;
 }
+updateScoreDisplay();
 
+let tieChecked = false;
 function isEndGame() {
-  const isFull = Array.from(gameButtons).every((button) => {
-    return !button.classList.contains("empty");
-  });
+  if (!tieChecked) {
+    const isFull = Array.from(gameButtons).every((button) => {
+      return !button.classList.contains("empty");
+    });
 
-  if ((isFull && checkWin("activeX")) || checkWin("activeOval")) {
-    document.querySelector(".tied_modal").style.display = "block";
-    increaseTieCount();
+    if (isFull && !checkWin("activeX") && !checkWin("activeOval")) {
+      document.querySelector(".tied_modal").style.display = "block";
+      increaseTieCount();
+      tieChecked = true;
+    }
   }
 }
 
@@ -171,21 +227,23 @@ document
     document.querySelector(".choise_section").style.display = "none";
     document.querySelector("main").style.display = "block";
     updateScoreDisplay();
+    userChoise == "x" ? hoverEffect(true) : hoverEffect(false);
   });
 
+// cpu
 document.querySelector(".choise_section-cpu").addEventListener("click", () => {
-  if (userChoise != "") {
-    document.querySelector(".choise_section").style.display = "none";
-    document.querySelector("main").style.display = "block";
-    withCpu = true;
-    if (userChoise == "o") {
-      cpuRandomTurn(true);
-      isXTurn = false;
-    }
-  } else {
-    alert("X yoki O ni tanlash kerak!");
-    document.querySelector(".choise_mark-wrapper").focus();
+  if (userChoise == "") {
+    userChoise = "o";
   }
+
+  document.querySelector(".choise_section").style.display = "none";
+  document.querySelector("main").style.display = "block";
+  withCpu = true;
+  if (userChoise == "o") {
+    cpuRandomTurn(true);
+    isXTurn = false;
+  }
+  hoverEffect(!isXTurn);
 });
 
 //
@@ -206,6 +264,7 @@ gameButtons.forEach((button) => {
       !button.classList.contains("activeX")
     ) {
       button.classList.remove("empty");
+      userChoise == "x" ? hoverEffect(false) : hoverEffect(true);
 
       if (withCpu) {
         updateScoreDisplay();
@@ -234,6 +293,7 @@ gameButtons.forEach((button) => {
           turnImg.setAttribute("src", "./images/nav-x.svg");
         }
         isXTurn = !isXTurn;
+        hoverEffect(!isXTurn);
       }
       updateScoreDisplay();
       isEndGame();
@@ -244,7 +304,6 @@ gameButtons.forEach((button) => {
 //
 
 //
-
 //
 
 //
@@ -254,26 +313,6 @@ gameButtons.forEach((button) => {
 //
 
 //
-
-const restartModal = document.querySelector(".restart_modal");
-restartBtn &&
-  restartBtn.addEventListener("click", () => {
-    restartModal.style.display = "block";
-
-    document
-      .querySelector(".restart_modal-cancel")
-      .addEventListener("click", () => {
-        restartModal.style.display = "none";
-      });
-    document
-      .querySelector(".restart_modal-confirm")
-      .addEventListener("click", () => {
-        location.reload();
-        localStorage.setItem("winCount", 0);
-        localStorage.setItem("tieCount", 0);
-        localStorage.setItem("cpuCount", 0);
-      });
-  });
 
 console.log(userChoise);
 // isXWon();
@@ -282,7 +321,56 @@ gameButtons.forEach((button) => {
   button.addEventListener("click", function () {
     checkWin("activeX");
     checkWin("activeOval");
+    isEndGame();
   });
 });
 
+function resetGameBoard() {
+  gameButtons.forEach((button) => {
+    button.classList.remove(
+      "activeX",
+      "activeOval",
+      "empty",
+      "winClassForLine"
+    );
+    button.innerHTML = "";
+    button.classList.add("empty");
+  });
+
+  isXTurn = userChoise == "x";
+  tieChecked = false;
+
+  updateScoreDisplay();
+
+  document.querySelector(".result_modal").style.display = "none";
+  document.querySelector(".tied_modal").style.display = "none";
+
+  if (withCpu && userChoise == "o") {
+    cpuRandomTurn(true);
+    turnImg.setAttribute("src", "./images/turn-oval.svg");
+    isXTurn = false;
+  } else if (!withCpu) {
+    turnImg.setAttribute("src", "./images/nav-x.svg");
+    isXTurn = true;
+  }
+
+  hoverEffect(!isXTurn);
+}
+
+document
+  .querySelector(".restart-btn")
+  .addEventListener("click", resetGameBoard);
+const nextRaund = document.querySelectorAll(".result_modal-next");
+
+nextRaund.forEach((element) => {
+  element.addEventListener("click", resetGameBoard);
+});
+
 document.addEventListener("DOMContentLoaded", updateScoreDisplay);
+
+let quitBtns = document.querySelectorAll(".result_modal-quit");
+quitBtns.forEach((element) => {
+  element.addEventListener("click", () => {
+    localStorage.clear();
+  });
+});

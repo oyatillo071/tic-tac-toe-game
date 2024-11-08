@@ -102,6 +102,13 @@ button {
   background-color: rgba(168, 191, 201, 0.0509803922);
 }
 
+.choise_mark-btn-o {
+  background-color: transparent;
+}
+.choise_mark-btn-o:hover {
+  background-color: rgba(168, 191, 201, 0.0509803922);
+}
+
 .choise_mark-bottom-text {
   font-size: 14px;
   font-weight: 400;
@@ -357,7 +364,7 @@ button {
 .tied_modal {
   position: fixed;
   width: 100%;
-  top: 40%;
+  top: 20%;
   bottom: 40%;
   height: 270px;
   padding: 40px 10px;
@@ -391,6 +398,16 @@ button {
   color: #a8bfc9;
 }
 
+.tied_modal-title {
+  color: #a8bfc9;
+  font-size: 40px;
+}
+
+.restart_modal-title {
+  color: #a8bfc9;
+  font-size: 40px;
+}
+
 .result_modal-title,
 .restart_modal-title,
 .tied_modal-title {
@@ -410,16 +427,6 @@ button {
   .tied_modal-title {
     font-size: 20px;
   }
-}
-
-.tied_modal-title {
-  color: #a8bfc9;
-  font-size: 40px;
-}
-
-.restart_modal-title {
-  color: #a8bfc9;
-  font-size: 40px;
 }
 
 .won-side {
@@ -494,4 +501,20 @@ button {
 }
 .result_modal-next:hover {
   background-color: #ffc860;
+}
+
+.isHoverX:hover {
+  background-image: url("../images/hoverX.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.isHoverOval:hover {
+  background-image: url("../images/hoverOval.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.winClassForLine {
+  background-color: greenyellow;
 }/*# sourceMappingURL=style.css.map */

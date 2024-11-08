@@ -30,10 +30,12 @@
                 src="./images/choise-x.png"
                 alt="X" />
             </button>
-            <button class="choise_mark-btn choise_mark-btn-o">
+            <button
+              class="choise_mark-btn choise_mark-btn-o"
+              id="isActive-choise">
               <img
                 class="choise_mark-btn-o-img"
-                src="./images/turn-oval.svg"
+                src="./images/choise-o.png"
                 alt="O" />
             </button>
           </div>
@@ -81,11 +83,11 @@
 
         <!--  -->
         <!--  -->
-        <section class="game_score">
+        <footer class="game_score">
           <h4 class="game_score-info game_score-info-win"></h4>
           <h4 class="game_score-info game_score-info-tied"></h4>
           <h4 class="game_score-info game_score-info-cpu"></h4>
-        </section>
+        </footer>
       </main>
 
       <!--  -->
@@ -104,14 +106,10 @@
         </h2>
         <!--  -->
         <div class="result_modal-btns">
-          <button
-            class="result_modal-quit"
-            onclick="window.open('', '_self', ''); window.close();">
-            QUIT
+          <button class="result_modal-quit" onclick="location.reload()">
+             QUIT
           </button>
-          <button class="result_modal-next" onclick="location.reload()">
-            NEXT ROUND
-          </button>
+          <button class="result_modal-next">NEXT ROUND</button>
         </div>
         <!--  -->
       </div>
@@ -138,18 +136,14 @@
       <div class="tied_modal-info">
         <h3 class="tied_modal-title">ROUND TIED</h3>
         <div class="result_modal-btns">
-          <button
-            class="result_modal-quit"
-            onclick="window.open('', '_self', ''); window.close();">
+          <button class="result_modal-quit" onclick="location.reload()">
             QUIT
           </button>
-          <button class="result_modal-next" onclick="location.reload()">
-            NEXT ROUND
-          </button>
+          <button class="result_modal-next">NEXT ROUND</button>
         </div>
       </div>
     </div>
-
+    
     <!--  -->
 
     <script src="./js/index.js"></script>
