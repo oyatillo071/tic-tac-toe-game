@@ -15,7 +15,7 @@ const turnImg = document.querySelector(".turn-img");
 const winCountElement = document.querySelector(".game_score-info-win");
 const tieCountElement = document.querySelector(".game_score-info-tied");
 const cpuCountElement = document.querySelector(".game_score-info-cpu");
-
+const modalWrapper = document.querySelector(".modals_wrapper");
 //
 let winCount = parseInt(localStorage.getItem("winCount")) || 0;
 let tieCount = parseInt(localStorage.getItem("tieCount")) || 0;
@@ -162,6 +162,7 @@ function checkWin(playerClass) {
   );
 
   if (hasWon) {
+    modalWrapper.style.display = "block";
     document.querySelector(".result_modal").style.display = "block";
     let res = "";
     let line = "";
@@ -177,7 +178,10 @@ function checkWin(playerClass) {
 
     whoWinGame(line);
     document.querySelector(".won-side").setAttribute("src", res);
-    return true;
+    let removeFreeArea = updateFreeButtons();
+    removeFreeArea.forEach((element) => {
+      element.classList.remove("empty");
+    });
   }
   return false;
 }
@@ -191,6 +195,8 @@ function isEndGame() {
     });
 
     if (isFull && !checkWin("activeX") && !checkWin("activeOval")) {
+      modalWrapper.style.display = "block";
+
       document.querySelector(".tied_modal").style.display = "block";
       increaseTieCount();
       tieChecked = true;
@@ -344,6 +350,7 @@ function resetGameBoard() {
 
   document.querySelector(".result_modal").style.display = "none";
   document.querySelector(".tied_modal").style.display = "none";
+  modalWrapper.style.display = "none";
 
   if (withCpu && userChoise == "o") {
     cpuRandomTurn(true);

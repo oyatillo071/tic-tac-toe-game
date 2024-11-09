@@ -96,54 +96,61 @@
 
       <!--  -->
     </div>
-    <div class="result_modal" style="display: none">
-      <!--  -->
-      <div class="result_modal-info">
-        <p class="result_modal-res-text">OH NO, YOU LOST…</p>
-        <h2 class="result_modal-title">
-          <img class="won-side" src="./images/blue-x.svg" ; alt="won variant" />
-          TAKES THE ROUND
-        </h2>
+
+    <div class="modals_wrapper" style="display: none">
+      <div class="result_modal" style="display: none">
         <!--  -->
-        <div class="result_modal-btns">
-          <button class="result_modal-quit" onclick="location.reload()">
-             QUIT
-          </button>
-          <button class="result_modal-next">NEXT ROUND</button>
+        <div class="result_modal-info">
+          <p class="result_modal-res-text">OH NO, YOU LOST…</p>
+          <h2 class="result_modal-title">
+            <img
+              class="won-side"
+              src="./images/blue-x.svg"
+              ;
+              alt="won variant" />
+            TAKES THE ROUND
+          </h2>
+          <!--  -->
+          <div class="result_modal-btns">
+            <button class="result_modal-quit" onclick="location.reload()">
+              QUIT
+            </button>
+            <button class="result_modal-next">NEXT ROUND</button>
+          </div>
+          <!--  -->
         </div>
         <!--  -->
       </div>
+
+      <!-- -->
+
       <!--  -->
-    </div>
+      <div class="restart_modal" style="display: none">
+        <div class="restart_modal-info">
+          <h3 class="restart_modal-title">RESTART GAME?</h3>
+          <div class="restart_modal-btns">
+            <button class="restart_modal-cancel">NO,CANCEL</button>
+            <button class="restart_modal-confirm">YES,RESTART</button>
+          </div>
+        </div>
+      </div>
 
-    <!-- -->
+      <!--  -->
 
-    <!--  -->
-    <div class="restart_modal" style="display: none">
-      <div class="restart_modal-info">
-        <h3 class="restart_modal-title">RESTART GAME?</h3>
-        <div class="restart_modal-btns">
-          <button class="restart_modal-cancel">NO,CANCEL</button>
-          <button class="restart_modal-confirm">YES,RESTART</button>
+      <!--  -->
+      <div class="tied_modal" style="display: none">
+        <div class="tied_modal-info">
+          <h3 class="tied_modal-title">ROUND TIED</h3>
+          <div class="result_modal-btns">
+            <button class="result_modal-quit" onclick="location.reload()">
+              QUIT
+            </button>
+            <button class="result_modal-next">NEXT ROUND</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!--  -->
-
-    <!--  -->
-    <div class="tied_modal" style="display: none">
-      <div class="tied_modal-info">
-        <h3 class="tied_modal-title">ROUND TIED</h3>
-        <div class="result_modal-btns">
-          <button class="result_modal-quit" onclick="location.reload()">
-            QUIT
-          </button>
-          <button class="result_modal-next">NEXT ROUND</button>
-        </div>
-      </div>
-    </div>
-    
     <!--  -->
 
     <script src="./js/index.js"></script>
