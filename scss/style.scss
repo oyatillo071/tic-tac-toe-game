@@ -487,3 +487,111 @@ button {
   height: 100%;
   background-color: transparent;
 }
+
+//
+
+//
+
+.loader-body {
+  /* center in the viewport */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* color picked up by the svg through the currentColor value */
+  color: hsl(53, 95%, 53%);
+  background: hsl(360, 100%, 65%);
+}
+svg {
+  width: 350px;
+  height: auto;
+}
+
+/* animate the shapes to rotate around the center of the svg */
+.rotate-shapes {
+  animation: rotateShapes 4s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+@keyframes rotateShapes {
+  12.5% {
+    transform: rotate(0deg);
+  }
+  25%,
+  62.5% {
+    transform: rotate(180deg);
+  }
+  75%,
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* rotate the x sign in between the keyframes describing the shapes' own rotation */
+.rotate-x {
+  animation: rotateX 4s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+@keyframes rotateX {
+  12.5%,
+  25% {
+    transform: rotate(45deg);
+  }
+  37.5%,
+  50% {
+    transform: rotate(90deg);
+  }
+  62.5%,
+  75% {
+    transform: rotate(135deg);
+  }
+  87.5%,
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+/* translate the two signs, once again in between the keyframes describing the rotation */
+.translate-zero {
+  animation: translateZero 4s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+@keyframes translateZero {
+  12.5%,
+  25% {
+    transform: translate(0);
+  }
+  37.5%,
+  50% {
+    transform: translate(-20px);
+  }
+  62.5%,
+  75% {
+    transform: translate(0);
+  }
+  87.5%,
+  100% {
+    transform: translate(-20px);
+  }
+}
+
+/* scale the goo to appear / disappear in between the translations of the two shapes */
+.scale-goo {
+  animation: scaleGoo 4s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+@keyframes scaleGoo {
+  /* hide the shape by default and once again 5% before and after every time the shape is shown  */
+  0%,
+  7.5%,
+  30%,
+  57.5%,
+  80%,
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  /* show the shape as the two signs connect */
+  12.5%,
+  25%,
+  62.5%,
+  75% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

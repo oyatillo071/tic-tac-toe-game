@@ -39,32 +39,74 @@ function updateScoreDisplay() {
 
 //
 function increaseWinCount() {
-  winCount++;
+  console.log(winCount);
+  winCount = winCount + 1;
+
   localStorage.setItem("winCount", winCount);
   updateScoreDisplay();
+  console.log(winCount);
 }
 
 //
 
 function increaseTieCount() {
   console.log(tieCount);
-  tieCount++;
+  tieCount = tieCount + 1;
 
   localStorage.setItem("tieCount", tieCount);
   updateScoreDisplay();
-  console.log(tieCount);
 }
 
 //
 
 function increaseCpuCount() {
-  cpuCount++;
+  console.log(cpuCount);
+
+  cpuCount = cpuCount + 1;
   localStorage.setItem("cpuCount", cpuCount);
   updateScoreDisplay();
+  console.log(cpuCount);
 }
 
 //
 updateScoreDisplay();
+
+function checkWin(playerClass) {
+  const hasWon = winPatterns.some((pattern) =>
+    pattern.every((index) =>
+      gameButtonsArr[index].classList.contains(playerClass)
+    )
+  );
+
+  if (hasWon) {
+    modalWrapper.style.display = "block";
+    document.querySelector(".result_modal").style.display = "block";
+    let res = "";
+    let line = "";
+    if (playerClass == "activeX") {
+      increaseWinCount();
+      res = "./images/blue-x.svg";
+      line = "x";
+    } else if (playerClass == "activeOval") {
+      increaseCpuCount();
+      line = "o";
+      res = "./images/orange-oval.svg";
+    }
+
+    whoWinGame(line);
+    document.querySelector(".won-side").setAttribute("src", res);
+
+    let removeFreeArea = updateFreeButtons();
+    removeFreeArea.forEach((element) => {
+      element.classList.remove("empty");
+    });
+    return true;
+  }
+  updateScoreDisplay();
+  return false;
+}
+
+//
 
 //
 function hoverUpdateBtns() {
@@ -99,29 +141,30 @@ function hoverEffect(isXTurn) {
 //
 function cpuRandomTurn(isXTurn) {
   let btns = updateFreeButtons();
-  let randIndex = Math.trunc(Math.random() * btns.length);
+  if (!checkWin("activeOval") && !checkWin("activeX")) {
+    let randIndex = Math.trunc(Math.random() * btns.length);
 
-  btns[randIndex].classList.remove("empty");
-  if (isXTurn) {
-    btns[
-      randIndex
-    ].innerHTML = `<img src="./images/xOnClick.svg" width="64" height="64" alt="x">`;
-    btns[randIndex].classList.add("activeX");
-    turnImg.setAttribute("src", "./images/turn-oval.svg");
-    isXTurn = false;
-    hoverEffect(!isXTurn);
-  } else {
-    btns[
-      randIndex
-    ].innerHTML = `<img src="./images/orange-oval.svg" alt="oval">`;
-    btns[randIndex].classList.add("activeOval");
-    turnImg.setAttribute("src", "./images/nav-x.svg");
-    isXTurn = true;
-    hoverEffect(!isXTurn);
+    btns[randIndex].classList.remove("empty");
+    if (isXTurn) {
+      btns[
+        randIndex
+      ].innerHTML = `<img src="./images/xOnClick.svg" width="64" height="64" alt="x">`;
+      btns[randIndex].classList.add("activeX");
+      turnImg.setAttribute("src", "./images/turn-oval.svg");
+      isXTurn = false;
+      hoverEffect(!isXTurn);
+    } else {
+      btns[
+        randIndex
+      ].innerHTML = `<img src="./images/orange-oval.svg" alt="oval">`;
+      btns[randIndex].classList.add("activeOval");
+      turnImg.setAttribute("src", "./images/nav-x.svg");
+      isXTurn = true;
+      hoverEffect(!isXTurn);
+    }
   }
-
-  checkWin(botChoise == "x" ? "activeX" : "activeOval");
-  isEndGame();
+  // checkWin(botChoise == "x" ? "activeX" : "activeOval");
+  // isEndGame();
 }
 
 const gameButtonsArr = Array.from(document.querySelectorAll(".game-area-btn"));
@@ -154,44 +197,16 @@ function whoWinGame(winSide) {
   });
 }
 
-function checkWin(playerClass) {
-  const hasWon = winPatterns.some((pattern) =>
-    pattern.every((index) =>
-      gameButtonsArr[index].classList.contains(playerClass)
-    )
-  );
-
-  if (hasWon) {
-    modalWrapper.style.display = "block";
-    document.querySelector(".result_modal").style.display = "block";
-    let res = "";
-    let line = "";
-    if (playerClass == "activeX") {
-      increaseWinCount();
-      res = "./images/blue-x.svg";
-      line = "x";
-    } else if (playerClass == "activeOval") {
-      increaseCpuCount();
-      line = "o";
-      res = "./images/orange-oval.svg";
-    }
-
-    whoWinGame(line);
-    document.querySelector(".won-side").setAttribute("src", res);
-    let removeFreeArea = updateFreeButtons();
-    removeFreeArea.forEach((element) => {
-      element.classList.remove("empty");
-    });
-  }
-  return false;
-}
-updateScoreDisplay();
-
 let tieChecked = false;
+
 function isEndGame() {
   if (!tieChecked) {
     const isFull = Array.from(gameButtons).every((button) => {
-      return !button.classList.contains("empty");
+      return (
+        (!button.classList.contains("empty") &&
+          button.classList.contains("activeX")) ||
+        button.classList.contains("activeOval")
+      );
     });
 
     if (isFull && !checkWin("activeX") && !checkWin("activeOval")) {
@@ -230,6 +245,8 @@ ovalBtn &&
 document
   .querySelector(".choise_section-player")
   .addEventListener("click", () => {
+    withCpu = false;
+
     document.querySelector(".choise_section").style.display = "none";
     document.querySelector("main").style.display = "block";
     updateScoreDisplay();
@@ -238,17 +255,17 @@ document
 
 // cpu
 document.querySelector(".choise_section-cpu").addEventListener("click", () => {
-  if (userChoise == "") {
+  withCpu = true;
+
+  if (userChoise == "" || userChoise == "o") {
     userChoise = "o";
+    cpuRandomTurn(true);
+    isXTurn = false;
   }
 
   document.querySelector(".choise_section").style.display = "none";
   document.querySelector("main").style.display = "block";
-  withCpu = true;
-  if (userChoise == "o") {
-    cpuRandomTurn(true);
-    isXTurn = false;
-  }
+
   hoverEffect(!isXTurn);
 });
 
@@ -273,7 +290,6 @@ gameButtons.forEach((button) => {
       userChoise == "x" ? hoverEffect(false) : hoverEffect(true);
 
       if (withCpu) {
-        updateScoreDisplay();
         if (isXTurn) {
           button.innerHTML = `<img src="./images/x.svg" alt="x">`;
           button.classList.add("activeX");
@@ -283,12 +299,16 @@ gameButtons.forEach((button) => {
           button.classList.add("activeOval");
           turnImg.setAttribute("src", "./images/nav-x.svg");
         }
+        //
+
         if (userChoise == "o") {
           cpuRandomTurn(true);
         } else {
           cpuRandomTurn(false);
         }
-      } else if (!withCpu) {
+
+        //
+      } else {
         if (isXTurn) {
           button.innerHTML = `<img src="./images/x.svg" alt="x">`;
           button.classList.add("activeX");
@@ -298,11 +318,12 @@ gameButtons.forEach((button) => {
           button.classList.add("activeOval");
           turnImg.setAttribute("src", "./images/nav-x.svg");
         }
+        if (checkWin("activeOval")) return;
+        if (checkWin("activeX")) return;
+        isEndGame();
         isXTurn = !isXTurn;
         hoverEffect(!isXTurn);
       }
-      updateScoreDisplay();
-      isEndGame();
     }
   });
 });
@@ -321,15 +342,7 @@ gameButtons.forEach((button) => {
 //
 
 console.log(userChoise);
-// isXWon();
-
-gameButtons.forEach((button) => {
-  button.addEventListener("click", function () {
-    checkWin("activeX");
-    checkWin("activeOval");
-    isEndGame();
-  });
-});
+//
 
 function resetGameBoard() {
   gameButtons.forEach((button) => {
@@ -373,7 +386,12 @@ nextRaund.forEach((element) => {
   element.addEventListener("click", resetGameBoard);
 });
 
-document.addEventListener("DOMContentLoaded", updateScoreDisplay);
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(() => {
+    document.querySelector(".loader-body").style.display = "none";
+  }, 2000);
+  updateScoreDisplay();
+});
 
 let quitBtns = document.querySelectorAll(".result_modal-quit");
 quitBtns.forEach((element) => {
